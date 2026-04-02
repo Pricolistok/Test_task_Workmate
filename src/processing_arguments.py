@@ -4,7 +4,7 @@ parser = ArgumentParser()
 
 def add_arguments() -> None:
     parser.add_argument("--files", nargs="*", help="Input files")
-    parser.add_argument("--report", help="Output file")
+    parser.add_argument("--report", help="Output file", required=True)
 
 def parse_arguments() -> tuple[list[str] | None, str | None]:
     args = parser.parse_args()
