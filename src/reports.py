@@ -13,8 +13,6 @@ class Report(ABC):
 
     def __get_data_from_files(self) -> dict[str, list[int]]:
         total_stat: dict[str, list[int]] = {}
-        if self.filenames is None or self.filenames == []:
-            raise ValueError('Arguments with filenames is empty')
         for filename in self.filenames:
             self.__get_data_from_file(total_stat=total_stat, filename=filename)
         return total_stat
@@ -22,8 +20,6 @@ class Report(ABC):
 
     @staticmethod
     def __get_data_from_file(total_stat: dict[str, list[int]], filename: str) -> None:
-        if not Path(filename).exists():
-            raise FileNotFoundError(f'File {filename} not found')
         with open(filename, encoding='utf-8') as file:
             reader = csv.reader(file)
             next(reader)

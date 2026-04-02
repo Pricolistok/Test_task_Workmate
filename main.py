@@ -1,13 +1,22 @@
-from src.processing_arguments import add_arguments, parse_arguments
-from src.utils import create_report
+import sys
+
+from src.cli import add_arguments, parse_arguments
+from src.report_factory import create_report
 
 
 def main():
-    add_arguments()
-    filenames, report_name = parse_arguments()
-    median_stat = create_report(filenames=filenames, report_name=report_name)
-    median_stat.print_report()
+    try:
+        filenames, report_type = parse_arguments()
+        report = create_report(filenames=filenames, report_type=report_type)
+        report.print_report()
+    except FileNotFoundError as file_error:
+        sys.stderr.write(str(file_error) + '\n')
+        sys.exit(1)
+    except ValueError as value_error:
+        sys.stderr.write(str(value_error) + '\n')
+        sys.exit(1)
 
 
 if __name__ == '__main__':
+    add_arguments()
     main()
